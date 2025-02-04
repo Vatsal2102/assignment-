@@ -18,4 +18,8 @@ define('DBMS', [
 
 ]);
 
+<<<<<<< HEAD
 #TEST
+=======
+#tkjewktjaeskjtjgfkadjfksdajfkjk
+>>>>>>> c2c031acaa4d2656921fe6112535b22e0c9c88d9

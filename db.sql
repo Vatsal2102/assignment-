@@ -1,5 +1,4 @@
 -- Create a table for the city
-
 CREATE TABLE city (
     cityID INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
@@ -15,7 +14,13 @@ CREATE TABLE city (
     photoID INT NOT NULL,
     commentID INT NOT NULL,
     placeID INT NOT NULL,
-    PRIMARY KEY (cityID)
+    PRIMARY KEY (cityID),
+    FOREIGN KEY (currencyID) REFERENCES currency(currencyID),
+    FOREIGN KEY (ethnicityID) REFERENCES ethnicity(ethnicityID),
+    FOREIGN KEY (newsID) REFERENCES news(newsID),
+    FOREIGN KEY (photoID) REFERENCES photo(photoID),
+    FOREIGN KEY (commentID) REFERENCES comment(commentID),
+    FOREIGN KEY (placeID) REFERENCES place(placeID)
 );
 
 -- Create a table for the currency
@@ -75,3 +80,20 @@ CREATE TABLE category (
     name VARCHAR(255) NOT NULL,
     PRIMARY KEY (categoryID)
 );
+
+-----------------------------------------------------------------
+
+-- Insert data into city table
+INSERT INTO city 
+    (name, latitude, longitude, timezone, language, population, countrycode, currencyID, ethnicityID, newsID, photoID, commentID, placeID)
+        VALUES 
+        ('Birmingham', 52.4862, -1.8904, 'GMT', 'English', 1141816, 'GB', 1, 1, 1, 1, 1, 1),
+        ('Frankfurt', 50.1109, 8.6821, 'CET', 'German', 753056, 'DE', 2, 2, 2, 2, 2, 2);
+
+-- Insert data into currency table
+INSERT INTO currency 
+    (name, symbol)
+        VALUES 
+        ('Pound Sterling', '£'),
+        ('Euro', '€');
+

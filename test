@@ -1,0 +1,43 @@
+<?php
+namespace TwinCities;
+@date_default_timezone_set("GMT");
+
+# Set the API keys
+define('OW_API_KEY', 'YOUR_OPENWEATHERMAP_API_KEY');
+define('GMAP_API_KEY', 'YOUR_GOOGLE_MAPS_API_KEY');
+
+define('DBMS', [
+    'HOST' => 'localhost',
+    'DB'   => 'twin-cities',
+    'UN'   => 'root',
+    'PW'   => ''
+]);
+
+# Set city data basics
+define('BIRMINGHAM', [
+    'NAME' => 'Birmingham',
+    'LAT' => 52.4862,
+    'LNG' => -1.8904,
+    'POPULATION' => 1140000,
+    'WCONDITION_URL' => 'https://api.openweathermap.org/data/2.5/weather?q=Birmingham,uk&appid=' . OW_API_KEY . '&units=metric',
+    'WFORECAST_URL' => 'https://api.openweathermap.org/data/2.5/forecast?q=Birmingham,uk&appid=' . OW_API_KEY . '&units=metric',
+    'MARKERS' => [
+        ['Museum', 52.4797, -1.9020, 1, './icons/museum.png'],
+        ['Botanical Gardens', 52.4660, -1.9295, 2, './icons/garden.png']
+    ]
+]);
+
+define('FRANKFURT', [
+    'NAME' => 'Frankfurt',
+    'LAT' => 50.1109,
+    'LNG' => 8.6821,
+    'POPULATION' => 753056,
+    'WCONDITION_URL' => 'https://api.openweathermap.org/data/2.5/weather?q=Frankfurt,de&appid=' . OW_API_KEY . '&units=metric',
+    'WFORECAST_URL' => 'https://api.openweathermap.org/data/2.5/forecast?q=Frankfurt,de&appid=' . OW_API_KEY . '&units=metric',
+    'MARKERS' => [
+        ['Römer', 50.1106, 8.6821, 1, './icons/roemer.png'],
+        ['Palmengarten', 50.1182, 8.6585, 2, './icons/garden.png']
+    ]
+]);
+
+?>

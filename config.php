@@ -16,4 +16,10 @@ define ('DBMS', [
     
 ]);
 
-#tkjewktjaeskjtjgfkadjfksdajfkjk
+#Cities' data
+define ('BRIMINGHAM', [
+    'Name' => 'Birmingham',
+    'Latitude' => '52.4862',
+    'Longitude' => '-1.8904'
+    ''
+]);

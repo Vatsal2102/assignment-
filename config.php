@@ -1,4 +1,4 @@
-<?php
+<!-- <?php
 namespace dsa_twin_cities;
 @date_default_timezone_set("GMT");
 
@@ -46,4 +46,4 @@ define ('City2', [
     
 ]);
 
-#Error handling
+#Error handling -->

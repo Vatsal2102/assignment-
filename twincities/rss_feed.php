@@ -1,7 +1,7 @@
 <?php
 namespace dsa_twin_cities;
 
-include('config.php');
+include_once('config.php');
 
 // Database connection
 $mysqli = new \mysqli(DBMS['Host'], DBMS['User'], DBMS['Password'], DBMS['DB']);

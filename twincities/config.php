@@ -3,9 +3,9 @@ namespace dsa_twin_cities;
 @date_default_timezone_set("GMT");
 
 // API keys
-define('OpenWeatherAPI', '5650daa88753c0c07f4d5c532ee48bbd');
-define('GoogleAPI', 'AIzaSyDDV8nwoJy6_mPUxZAuMjnrCGIwI6tUaBk');
-define('FlickrAPI', 'f33d5ce38ae62686553faa01881b59af');
+define('OPENWEATHER_API_KEY', '5650daa88753c0c07f4d5c532ee48bbd');
+define('GOOGLE_API_KEY', 'AIzaSyDDV8nwoJy6_mPUxZAuMjnrCGIwI6tUaBk');
+define('FLICKR_API_KEY', 'f33d5ce38ae62686553faa01881b59af');
 
 // Database connection
 define('DBMS', [

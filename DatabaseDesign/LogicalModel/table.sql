@@ -61,16 +61,6 @@ CREATE TABLE news (
     FOREIGN KEY (cityID) REFERENCES city(cityID)
 );
 
--- Create table for photo
-CREATE TABLE photo (
-    photoID INT NOT NULL,
-    title VARCHAR(255) NOT NULL,
-    image BLOB NOT NULL,
-    date DATE,
-    cityID INT NOT NULL,
-    PRIMARY KEY (photoID),
-    FOREIGN KEY (cityID) REFERENCES city(cityID)
-);
 
 -- Create junction table for news and photo
 CREATE table news_photo (

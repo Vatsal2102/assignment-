@@ -23,25 +23,10 @@ City
 country
 	int countryID
 	string name
+	string currency
+	string currencysymbol
 	int code
 
-
-// Entity for the most used currency of the city
-currency
-	int currencyID
-	string currency
-	string symbol
-
-
-// Entity for the ethnicity of the people living in the city
-ethnicity
-	int ethnicityID
-	string ethnicity
-
-// Junction table for city and ethnicity
-city_ethnicity
-	int cityID
-	int ethnicityID
 
 // Entity for the news of the city
 news
@@ -59,10 +44,7 @@ photo
 	Date date
 	int cityID
 
-// Entity for relation bet news and photo
-news_photo
-	int newsID
-	int photoID
+
 
 // Entity for user
 user
@@ -92,11 +74,6 @@ category
 	int categoryID
 	string name
 
-// Entity for relation bet place and category
-place_category
-	int placeID
-	int categoryID
-
 
 //----------------------------------------------------//
 
@@ -104,12 +81,8 @@ place_category
 
 City{1}--{1} country
 
-// city can have many ethnicities and many enthnicites can belong to many cities
-City {0..n}--{0..n} city_ethnicity
-ethnicity {0..n}--{0..n} city_ethnicity
 
-// city can have only one currency and currency can be involved in many citites
-City {1}--{1..n}currency
+
 
 // city will have none or many news and news can belong to many cities
 City {1}--{0..n}news
@@ -117,20 +90,18 @@ City {1}--{0..n}news
 // city can have many photos and photos can belong to many cities
 City {1}--{0..n}photo
 
+// news and photo are many to many
+news{0..n}--{0..n}photo
+
 // none or more comments for the one city 
 City {1}--{0..n}comment
 
 // cities have many places but place will be specified to one city
 City {1}--{0..n}place
 
+// place and categoryy have many to mnay relations
+place{0..n}--{0..n}category
+
 // user and comment relation
 user {1}--{0..n}comment
 
-// A place can belong to multiple categories and a single category will have one or more places
-place {1..n}--{1..n} place_category
-category {1..n}--{1..n} place_category
-
-// A single piece of news can have multiple associated photos.
-// A single photo can be associated with multiple news items.
-news {1..n}--{1..n} news_photo
-photo {1..n}--{1..n} news_photo

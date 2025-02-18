@@ -3,7 +3,7 @@
 -- Create table for city
 
 CREATE TABLE city (
-    cityID INT NOT NULL,
+    cityID INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
     description TEXT,
     history TEXT,
@@ -12,10 +12,8 @@ CREATE TABLE city (
     timezone VARCHAR(255),
     language VARCHAR(255),
     population INT,
-    currencyID INT,
     countryID INT,
     PRIMARY KEY (cityID),
-    FOREIGN KEY (currencyID) REFERENCES currency(currencyID),
     FOREIGN KEY (countryID) REFERENCES country(countryID)
 );
 
@@ -24,31 +22,11 @@ CREATE TABLE country (
     countryID INT NOT NULL,
     name VARCHAR(255) NOT NULL,
     code CHAR(3) NOT NULL,
+    currencyname VARCHAR(255),
+    currencysymbol VARCHAR(255),
     PRIMARY KEY (countryID)
 );
 
--- Create table for currency
-CREATE TABLE currency (
-    currencyID INT NOT NULL,
-    name VARCHAR(255) NOT NULL,
-    symbol VARCHAR(255) NOT NULL,
-    PRIMARY KEY (currencyID)
-);
-
--- Create table for ethnicity
-CREATE TABLE ethnicity (
-    ethnicityID INT NOT NULL,
-    name VARCHAR(255) NOT NULL,
-    PRIMARY KEY (ethnicityID)
-);
-
--- Create junction table for city and ethnicity
-CREATE table city_ethnicity (
-    cityID INT NOT NULL,
-    ethnicityID INT NOT NULL,
-    FOREIGN KEY (cityID) REFERENCES city(cityID),
-    FOREIGN KEY (ethnicityID) REFERENCES ethnicity(ethnicityID)
-);
 
 -- Create table for news
 CREATE TABLE news (
@@ -58,6 +36,17 @@ CREATE TABLE news (
     date DATE NOT NULL,
     cityID INT NOT NULL,
     PRIMARY KEY (newsID),
+    FOREIGN KEY (cityID) REFERENCES city(cityID)
+);
+
+-- Create table for photo
+CREATE TABLE photo (
+    photoID INT NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    image BLOB NOT NULL,
+    date DATE NOT NULL,
+    cityID INT NOT NULL,
+    PRIMARY KEY (photoID),
     FOREIGN KEY (cityID) REFERENCES city(cityID)
 );
 

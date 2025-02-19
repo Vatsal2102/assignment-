@@ -1,10 +1,10 @@
 <?php
 namespace dsa_twin_cities;
 
-include_once('config.php');
+include_once('C:\laragon\www\twincities\Twin-cities-web-app\config.php');
 
 // Database connection
-$mysqli = new \mysqli(DBMS['Host'], DBMS['User'], DBMS['Password'], DBMS['DB']);
+$mysqli = new \mysqli(DBMS['Host'], DBMS['User'], DBMS['Password'], DBMS['DBName']);
 
 if ($mysqli->connect_error) {
     die("Connection failed: " . $mysqli->connect_error);

@@ -3,16 +3,16 @@ namespace dsa_twin_cities;
 @date_default_timezone_set("GMT");
 
 // API keys
-define('OPENWEATHER_API_KEY', 'YOUR_OPENWEATHER_API_KEY');
-define('GOOGLE_API_KEY', 'YOUR_GOOGLE_API_KEY');
-define('FLICKR_API_KEY', 'YOUR_FLICKR_API_KEY');
+define('OPENWEATHER_API_KEY', '5650daa88753c0c07f4d5c532ee48bbd');
+define('GOOGLE_API_KEY', 'AIzaSyDDV8nwoJy6_mPUxZAuMjnrCGIwI6tUaBk');
+define('FLICKR_API_KEY', 'f33d5ce38ae62686553faa01881b59af');
 
 // Database connection
 define('DBMS', [
     'Host' => 'localhost',
-    'DB' => 'twincities',
     'User' => 'root',
-    'Password' => ''
+    'Password' => '',
+    'DBName' => 'twincities'
 ]);
 
 // Error handling
@@ -29,3 +29,4 @@ register_shutdown_function(function () {
     }
 });
 ?>
+

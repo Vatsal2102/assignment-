@@ -1,11 +1,11 @@
 <?php
 namespace dsa_twin_cities;
-include_once(__DIR__ . '/../../config.php');
+include_once('C:\laragon\www\twincities\Twin-cities-web-app\config.php');
 
 $hostname = DBMS['Host'];
 $username = DBMS['User'];
 $password = DBMS['Password'];
-$database_name = DBMS['DB'];
+$database_name = DBMS['DBName'];
 
 $db = connect($hostname, $username, $password);
 create_database($db, $database_name);

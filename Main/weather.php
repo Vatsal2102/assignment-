@@ -1,7 +1,7 @@
 <?php
 namespace dsa_twin_cities;
 
-include_once('config.php');
+include_once('C:\laragon\www\twincities\Twin-cities-web-app\config.php');
 
 // Function to fetch current weather data using OpenWeatherAPI
 function getCurrentWeather($city) {
@@ -43,13 +43,16 @@ function formatCurrentWeather($currentweatherdata) {
         'date' => date('F j, H:i:s')
     ];
 }
-
 function formatForecastWeather($forecastweatherdata) {
     if (!$forecastweatherdata) {
         return "Forecast data not available.";
     }
     $formattedData = []; // Forecast data can have multiple values
+    $count = 0;
     foreach ($forecastweatherdata['list'] as $forecast) {
+        if ($count >= 20) { // Limit to 20 forecasts
+            break;
+        }
         $formattedData[] = [
             'date' => date('F j, H:i:s', $forecast['dt']),
             'temp' => $forecast['main']['temp'] - 273.15, // Convert from Kelvin to Celsius
@@ -59,6 +62,7 @@ function formatForecastWeather($forecastweatherdata) {
             'wind' => $forecast['wind']['speed'],
             'pressure' => $forecast['main']['pressure']
         ];
+        $count++;
     }
     return $formattedData;
 }

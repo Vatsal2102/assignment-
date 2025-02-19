@@ -48,7 +48,7 @@ function formatForecastWeather($forecastweatherdata) {
     if (!$forecastweatherdata) {
         return "Forecast data not available.";
     }
-    $formattedData = []; // Forcast data can have multiple values
+    $formattedData = []; // Forecast data can have multiple values
     foreach ($forecastweatherdata['list'] as $forecast) {
         $formattedData[] = [
             'date' => date('F j, H:i:s', $forecast['dt']),
@@ -62,9 +62,4 @@ function formatForecastWeather($forecastweatherdata) {
     }
     return $formattedData;
 }
-
-
-
-
-
 ?>

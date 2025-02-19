@@ -1,10 +1,168 @@
--- Insert data into country table
-INSERT INTO country
-(name, code, currencyname, currencysymbol)
-VALUES
-("United Kingdom", "GB", "Pound Sterling", "£"),
-("Germany", "DE", "Euro", "€");
+# Description: This file contains the functions to connect to a MySQL database, create a database, create tables, and insert data into tables.
+import mysql.connector
+from mysql.connector import Error
+import configparser
 
+# Get the data from configuration file
+def get_db_config(config_file):
+    config = configparser.ConfigParser()
+    config.read(config_file)
+    
+    db_config = {
+        'hostname': config['DBMS']['Host'],
+        'username': config['DBMS']['User'],
+        'password': config['DBMS']['Password']
+    }
+    
+    return db_config
+#------------------------------------------------------------#
+def main():
+    config_file = "twincities/config.ini"
+    db_config = get_db_config(config_file)
+
+    connect(db_config['hostname'], db_config['username'], db_config['password']) # invoke the connect function
+    create_database(db_config['hostname'], db_config['username'], db_config['password'], 'twincities') # invoke the create_database function
+    create_table(db_config['hostname'], db_config['username'], db_config['password'], 'twincities', 'city') # invoke the create_table function
+    insert_data(db_config['hostname'], db_config['username'], db_config['password'], 'twincities', 'city', 'data') # invoke the insert_data function
+
+#------------------------------------------------------------#
+# Connect to MySQL
+def connect(hostname, username, password):
+    try:
+        db = mysql.connector.connect(host=hostname, user=username, password=password)
+        if db.is_connected():
+            print('Connected to MySQL database')
+    except Error as e:
+        print(e)
+    finally:
+        db.close()
+
+# Create a database and use it
+def create_database(hostname, username, password, database_name):
+    try:
+        db = mysql.connector.connect(host=hostname, user=username, password=password)
+        cursor = db.cursor()
+        cursor.execute(f'CREATE DATABASE {database_name} IF NOT EXISTS')
+        cursor.execute(f'USE {database_name}')
+        print(f'{database_name} created and in use')
+    except Error as e:
+        print(e)
+    finally:
+        cursor.close()
+        db.close()
+
+# Create a table
+def create_table(hostname, username, password, database_name):
+    try:
+        db = mysql.connector.connect(host=hostname, user=username, password=password, database=database_name)
+        cursor = db.cursor()
+        cursor.execute(
+            '''CREATE TABLE city (
+    cityID INTEGER PRIMARY KEY AUTOINCREMENT,
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    history TEXT,
+    latitude DECIMAL(10, 8),
+    longitude DECIMAL(11, 8),
+    timezone VARCHAR(255),
+    language VARCHAR(255),
+    population INT,
+    countryID INT,
+    FOREIGN KEY (countryID) REFERENCES country(countryID)
+);
+
+-- Create table for country
+CREATE TABLE country (
+    countryID INTEGER PRIMARY KEY AUTOINCREMENT,
+    name VARCHAR(255) NOT NULL,
+    code CHAR(3) NOT NULL,
+    currencyname VARCHAR(255),
+    currencysymbol VARCHAR(255)
+);
+
+-- Create table for news
+CREATE TABLE news (
+    newsID INTEGER PRIMARY KEY AUTOINCREMENT,
+    title VARCHAR(255) NOT NULL,
+    content TEXT NOT NULL,
+    date DATE NOT NULL,
+    cityID INT NOT NULL,
+    FOREIGN KEY (cityID) REFERENCES city(cityID)
+);
+
+-- Create table for photo
+CREATE TABLE photo (
+    photoID INTEGER PRIMARY KEY AUTOINCREMENT,
+    title VARCHAR(255) NOT NULL,
+    image BLOB NOT NULL,
+    date DATE NOT NULL,
+    cityID INT NOT NULL,
+    FOREIGN KEY (cityID) REFERENCES city(cityID)
+);
+
+-- Create junction table for news and photo
+CREATE table news_photo (
+    newsID INT NOT NULL,
+    photoID INT NOT NULL,
+    FOREIGN KEY (newsID) REFERENCES news(newsID),
+    FOREIGN KEY (photoID) REFERENCES photo(photoID)
+);
+
+-- Create table for user
+CREATE TABLE user (
+    userID INTEGER PRIMARY KEY AUTOINCREMENT,
+    username VARCHAR(255) NOT NULL
+);
+
+-- Create table for comment
+CREATE TABLE comment (
+    commentID INTEGER PRIMARY KEY AUTOINCREMENT,
+    content TEXT NOT NULL,
+    date DATE NOT NULL,
+    cityID INT NOT NULL,
+    userID INT NOT NULL,
+    FOREIGN KEY (cityID) REFERENCES city(cityID),
+    FOREIGN KEY (userID) REFERENCES user(userID)
+);
+
+-- Create table for place
+CREATE TABLE place (
+    placeID INTEGER PRIMARY KEY AUTOINCREMENT,
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    latitude DECIMAL(10, 8),
+    longitude DECIMAL(11, 8),
+    cityID INT NOT NULL,
+    FOREIGN KEY (cityID) REFERENCES city(cityID)
+);
+
+-- Create table for category
+CREATE TABLE category (
+    categoryID INTEGER PRIMARY KEY AUTOINCREMENT,
+    name VARCHAR(255) NOT NULL
+);
+
+-- Create junction table for place_category
+CREATE table place_category (
+    placeID INT NOT NULL,
+    categoryID INT NOT NULL,
+    FOREIGN KEY (placeID) REFERENCES place(placeID),
+    FOREIGN KEY (categoryID) REFERENCES category(categoryID)
+);)
+                       ''')
+        print('tables created')
+    except Error as e:
+        print(e)
+    finally:
+        cursor.close()
+        db.close()
+
+# Insert data into table
+def insert_data(hostname, username, password, database_name):
+    try:
+        db = mysql.connector.connect(host=hostname, user=username, password=password, database=database_name)
+        cursor = db.cursor()
+        cursor.execute('''
 -- Add data into the city table
 INSERT INTO city 
 (name, description, history, latitude, longitude, timezone, language, population, countryID) 
@@ -29,6 +187,13 @@ VALUES
 "German", 
 732688, 
 2); 
+
+-- Insert data into country table
+INSERT INTO country
+(name, code, currencyname, currencysymbol)
+VALUES
+("United Kingdom", "GB", "Pound Sterling", "£"),
+("Germany", "DE", "Euro", "€");
 
 -- Insert data into news, photo and news_photo tables
 INSERT INTO news (title, content, date, cityID) 
@@ -153,6 +318,21 @@ VALUES
 (9, 8),  -- Main Tower -> Entertainment
 (10, 4), -- Senckenberg Natural History Museum -> Education
 (10, 3); -- Senckenberg Natural History Museum -> Tourism
+
+
+
+
+''')    
+        print('data inserted')
+    except Error as e:
+        print(e)
+    finally:
+        cursor.close()
+        db.close()
+
+# Call main function
+main()
+
 
 
 

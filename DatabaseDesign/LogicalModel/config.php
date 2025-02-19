@@ -10,9 +10,9 @@ define('FLICKR_API_KEY', 'f33d5ce38ae62686553faa01881b59af');
 // Database connection
 define('DBMS', [
     'Host' => 'localhost',
-    'DB' => 'twincities',
     'User' => 'root',
-    'Password' => ''
+    'Password' => '',
+    'DBName' => 'twincities'
 ]);
 
 // Error handling

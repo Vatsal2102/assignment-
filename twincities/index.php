@@ -11,21 +11,7 @@ function getMapData($latitude, $longitude) {
     return $url;
 }
 
-// Function to fetch Flickr images using FlickrAPI
-function getFlickrImages($city) {
-    $apiKey = FLICKR_API_KEY;
-    $url = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key={$apiKey}&text={$city}&format=json&nojsoncallback=1";
-    $response = file_get_contents($url);
-    if ($response === FALSE) {
-        return null;
-    }
-    return json_decode($response, true);
-}
 
-
-// Fetch Flickr images for Birmingham and Frankfurt
-$birminghamImages = getFlickrImages('Birmingham');
-$frankfurtImages = getFlickrImages('Frankfurt');
 ?>
 
 <!DOCTYPE html>
@@ -54,31 +40,6 @@ $frankfurtImages = getFlickrImages('Frankfurt');
         <h2>Frankfurt</h2>
     </div>
 </body>
-<!-- 
-    <div id="images">
-        <h2>Birmingham Images</h2>
-        <?php if ($birminghamImages): ?>
-            <?php foreach ($birminghamImages['photos']['photo'] as $photo) : ?>
-                <?php
-                $photoUrl = "https://live.staticflickr.com/{$photo['server']}/{$photo['id']}_{$photo['secret']}_q.jpg";
-                ?>
-                <img src="<?php echo $photoUrl; ?>" alt="Birmingham Image">
-            <?php endforeach; ?>
-        <?php else: ?>
-            <p>Image data not available.</p>
-        <?php endif; ?>
 
-        <h2>Frankfurt Images</h2>
-        <?php if ($frankfurtImages): ?>
-            <?php foreach ($frankfurtImages['photos']['photo'] as $photo) : ?>
-                <?php
-                $photoUrl = "https://live.staticflickr.com/{$photo['server']}/{$photo['id']}_{$photo['secret']}_q.jpg";
-                ?>
-                <img src="<?php echo $photoUrl; ?>" alt="Frankfurt Image">
-            <?php endforeach; ?>
-        <?php else: ?>
-            <p>Image data not available.</p>
-        <?php endif; ?>
-    </div> -->
 </body>
 </html>

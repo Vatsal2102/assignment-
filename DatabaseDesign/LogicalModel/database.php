@@ -1,6 +1,6 @@
 <?php
 namespace dsa_twin_cities;
-include_once('C:\laragon\www\twincities\Twin-cities-web-app\config.php');
+include_once('C:\laragon\www\Twin-cities-web-app\config.php');
 
 $hostname = DBMS['Host'];
 $username = DBMS['User'];
@@ -196,10 +196,10 @@ function get_data_insertion_sql() {
     ('Germany', 'DE', 'Euro', '€');
      
     -- Add data into the city table
-    INSERT INTO city (cityID, name, description, history, latitude, longitude, timezone, language, population, countryID) 
+    INSERT INTO city (name, description, history, latitude, longitude, timezone, language, population, countryID) 
     VALUES 
-    (1, 'Birmingham', 'A major city in England\'s West Midlands region, known for its rich industrial history and vibrant cultural scene.', 'Second-largest city in Britain, with a population of 1.158 million in the city proper. It played a key role in the Industrial Revolution and has since evolved into a modern metropolis.', 52.4862, -1.8904, 'GMT', 'English', 1080000, 1),
-    (2, 'Frankfurt', 'A major financial hub in Germany, home to the European Central Bank.', 'Frankfurt has a rich history dating back to the Roman Empire. It became a major center for trade and finance in medieval Europe and continues to be a global financial hub today.', 50.1109, 8.6821, 'CET', 'German', 732688, 2);
+    ('Birmingham', 'A major city in England\'s West Midlands region, known for its rich industrial history and vibrant cultural scene.', 'Second-largest city in Britain, with a population of 1.158 million in the city proper. It played a key role in the Industrial Revolution and has since evolved into a modern metropolis.', 52.4862, -1.8904, 'GMT', 'English', 1080000, 1),
+    ('Frankfurt', 'A major financial hub in Germany, home to the European Central Bank.', 'Frankfurt has a rich history dating back to the Roman Empire. It became a major center for trade and finance in medieval Europe and continues to be a global financial hub today.', 50.1109, 8.6821, 'CET', 'German', 732688, 2);
 
     -- Insert data into news, photo and news_photo tables
     INSERT INTO news (title, content, date, cityID) 

@@ -1,11 +1,13 @@
 <?php
+
 namespace dsa_twin_cities;
 
 include_once('C:\laragon\www\Twin-cities-web-app\config.php');
 include_once('C:\laragon\www\Twin-cities-web-app\Main\weather.php');
+include_once('C:\laragon\www\Twin-cities-web-app\Main\darkmode.php');
 
 // Fetch current weather data for Birmingham
-$currentWeatherBirmingham = getCurrentWeather('Birmingham');
+$currentWeatherBirmingham = getCurrentWeather('Birmingham,GB');
 $formattedWeatherBirmingham = formatCurrentWeather($currentWeatherBirmingham);
 
 // Fetch current weather data for Frankfurt
@@ -14,6 +16,7 @@ $formattedWeatherFrankfurt = formatCurrentWeather($currentWeatherFrankfurt);
 
 include_once('C:\laragon\www\Twin-cities-web-app\Templates\head.php');
 include_once('C:\laragon\www\Twin-cities-web-app\Templates\nav.php');
+include_once('C:\laragon\www\Twin-cities-web-app\Templates\content.php');
 ?>
 
 <div class="container">

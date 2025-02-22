@@ -11,4 +11,8 @@
   <li class="nav-item">
     <a class="nav-link" href="#">Docs</a>
   </li>
+  <!-- dark mode button -->
+  <li class="nav-item">
+    <button id="darkModeToggle">🌙 Dark Mode</button>
+  </li>
 </ul>

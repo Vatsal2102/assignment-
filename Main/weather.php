@@ -1,10 +1,12 @@
 <?php
+
 namespace dsa_twin_cities;
 
 include_once('C:\laragon\www\Twin-cities-web-app\config.php');
 
 // Function to fetch current weather data using OpenWeatherAPI
-function getCurrentWeather($city) {
+function getCurrentWeather($city)
+{
     $apiKey = OPENWEATHER_API_KEY;
     $url = "http://api.openweathermap.org/data/2.5/weather?q={$city}&appid={$apiKey}";
     $response = file_get_contents($url);
@@ -15,7 +17,8 @@ function getCurrentWeather($city) {
 }
 
 // Function to fetch forecast weather data using OpenWeatherAPI
-function getForecastWeather($city) {
+function getForecastWeather($city)
+{
     $apiKey = OPENWEATHER_API_KEY;
     $url = "http://api.openweathermap.org/data/2.5/forecast?q={$city}&appid={$apiKey}";
     $response = file_get_contents($url);
@@ -26,10 +29,20 @@ function getForecastWeather($city) {
 }
 
 // Function to format the data
-function formatCurrentWeather($currentweatherdata) {
+function formatCurrentWeather($currentweatherdata)
+{
     if (!$currentweatherdata) {
         return "Weather data not available.";
     }
+
+    // Get timezone offset (in seconds) from API response
+    $timezone_offset = $currentweatherdata['timezone'];
+
+    // Convert timestamps to the correct timezone
+    $sunrise = gmdate('H:i', $currentweatherdata['sys']['sunrise'] + $timezone_offset);
+    $sunset = gmdate('H:i', $currentweatherdata['sys']['sunset'] + $timezone_offset);
+    $date = gmdate('F j, H:i:s', $currentweatherdata['dt'] + $timezone_offset);
+
     return [
         'name' => $currentweatherdata['name'],
         'temp' => $currentweatherdata['main']['temp'] - 273.15, // Convert from Kelvin to Celsius
@@ -38,12 +51,15 @@ function formatCurrentWeather($currentweatherdata) {
         'humidity' => $currentweatherdata['main']['humidity'],
         'wind' => $currentweatherdata['wind']['speed'],
         'pressure' => $currentweatherdata['main']['pressure'],
-        'sunrise' => date('H:i', $currentweatherdata['sys']['sunrise']),
-        'sunset' => date('H:i', $currentweatherdata['sys']['sunset']),
-        'date' => date('F j, H:i:s')
+        'sunrise' => $sunrise,
+        'sunset' => $sunset,
+        'date' => $date,
+        'feels_like' => $currentweatherdata['main']['feels_like'] - 273.15 // Convert from Kelvin to Celsius
     ];
 }
-function formatForecastWeather($forecastweatherdata) {
+
+function formatForecastWeather($forecastweatherdata)
+{
     if (!$forecastweatherdata) {
         return "Forecast data not available.";
     }
@@ -66,4 +82,3 @@ function formatForecastWeather($forecastweatherdata) {
     }
     return $formattedData;
 }
-?>

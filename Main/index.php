@@ -1,8 +1,8 @@
 <?php
 namespace dsa_twin_cities;
 
-include_once('C:\laragon\www\twincities\Twin-cities-web-app\config.php');
-include_once('C:\laragon\www\twincities\Twin-cities-web-app\Main\weather.php');
+include_once('C:\laragon\www\Twin-cities-web-app\config.php');
+include_once('C:\laragon\www\Twin-cities-web-app\Main\weather.php');
 
 // Fetch current weather data for Birmingham
 $currentWeatherBirmingham = getCurrentWeather('Birmingham');
@@ -12,8 +12,8 @@ $formattedWeatherBirmingham = formatCurrentWeather($currentWeatherBirmingham);
 $currentWeatherFrankfurt = getCurrentWeather('Frankfurt');
 $formattedWeatherFrankfurt = formatCurrentWeather($currentWeatherFrankfurt);
 
-include_once('C:\laragon\www\twincities\Twin-cities-web-app\Templates\head.php');
-include_once('C:\laragon\www\twincities\Twin-cities-web-app\Templates\nav.php');
+include_once('C:\laragon\www\Twin-cities-web-app\Templates\head.php');
+include_once('C:\laragon\www\Twin-cities-web-app\Templates\nav.php');
 ?>
 
 <div class="container">
@@ -21,13 +21,13 @@ include_once('C:\laragon\www\twincities\Twin-cities-web-app\Templates\nav.php');
         <div class="col-md-6">
             <?php
             $formattedWeather = $formattedWeatherBirmingham;
-            include('C:\laragon\www\twincities\Twin-cities-web-app\Templates\weatherwidget.php');
+            include('C:\laragon\www\Twin-cities-web-app\Templates\weatherwidget.php');
             ?>
         </div>
         <div class="col-md-6">
             <?php
             $formattedWeather = $formattedWeatherFrankfurt;
-            include('C:\laragon\www\twincities\Twin-cities-web-app\Templates\weatherwidget.php');
+            include('C:\laragon\www\Twin-cities-web-app\Templates\weatherwidget.php');
             ?>
         </div>
     </div>
@@ -35,7 +35,7 @@ include_once('C:\laragon\www\twincities\Twin-cities-web-app\Templates\nav.php');
 
 
 <?php
-include_once('C:\laragon\www\twincities\Twin-cities-web-app\Templates\footer.php');
-include_once('C:\laragon\www\twincities\Twin-cities-web-app\Templates\content.php');
-include_once('C:\laragon\www\twincities\Twin-cities-web-app\Main\map.php');
+include_once('C:\laragon\www\Twin-cities-web-app\Templates\footer.php');
+include_once('C:\laragon\www\Twin-cities-web-app\Templates\content.php');
+include_once('C:\laragon\www\Twin-cities-web-app\Main\map.php');
 ?>

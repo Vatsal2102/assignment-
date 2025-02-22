@@ -1,7 +1,7 @@
 <?php
 namespace dsa_twin_cities;
 
-include_once('C:\laragon\www\twincities\Twin-cities-web-app\config.php');
+include_once('C:\laragon\www\Twin-cities-web-app\config.php');
 
 // Function to fetch map data using GoogleAPI
 function getMapData($latitude, $longitude) {

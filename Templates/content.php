@@ -1,4 +1,4 @@
-<body class="<?php echo $darkModeClass; ?>">
+<!-- <body class="<?php echo $darkModeClass; ?>">
 
     <div class="container">
         <h1>Dark Mode with PHP & AJAX</h1>
@@ -9,4 +9,4 @@
     </div>
 
     <script src="C:\laragon\www\Twin-cities-web-app\Main\darkmode.js"></script>
-</body>
+</body> -->

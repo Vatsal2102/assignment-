@@ -2,11 +2,13 @@
 namespace dsa_twin_cities;
 include_once('C:\laragon\www\Twin-cities-web-app\config.php');
 
-$hostname = DBMS['Host'];
-$username = DBMS['User'];
-$password = DBMS['Password'];
-$database_name = DBMS['DBName'];
+// Get database connection parameters
+$hostname = DBMS['HOST'];
+$username = DBMS['USER'];
+$password = DBMS['PASSWORD'];
+$database_name = DBMS['DBNAME'];
 
+// Main functions
 $db = connect($hostname, $username, $password);
 create_database($db, $database_name);
 create_tables($db, $database_name);
@@ -166,6 +168,8 @@ function get_table_creation_sql() {
         placeID INT AUTO_INCREMENT PRIMARY KEY,
         name VARCHAR(255) NOT NULL,
         description TEXT,
+        opentimes VARCHAR(255),
+        closetimes VARCHAR(255),
         latitude DECIMAL(10, 8),
         longitude DECIMAL(11, 8),
         cityID INT NOT NULL,
@@ -232,18 +236,20 @@ function get_data_insertion_sql() {
     VALUES 
     (1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (6, 6), (7, 7), (8, 8), (9, 9), (10, 10);
     
-    INSERT INTO place (name, description, latitude, longitude, cityID) 
+    INSERT INTO place (name, description, opentimes, closetimes, latitude, longitude, cityID) 
     VALUES 
-    ('Birmingham Museum & Art Gallery', 'A major museum known for its Pre-Raphaelite art collection and historical exhibits.', 52.4797, -1.9020, 1),
-    ('Bullring Shopping Centre', 'One of the largest shopping centers in the UK, famous for its modern architecture.', 52.4778, -1.8932, 1),
-    ('Cadbury World', 'A visitor attraction showcasing the history and production of Cadbury chocolates.', 52.4286, -1.9279, 1),
-    ('Birmingham Botanical Gardens', 'Beautiful Victorian gardens featuring glasshouses and rare plant species.', 52.4711, -1.9367, 1),
-    ('Library of Birmingham', 'A modern library with a unique architectural design and extensive book collections.', 52.4798, -1.9049, 1),
-    ('Römerberg', 'The historic heart of Frankfurt, home to the Römer, the city hall since the 15th century.', 50.1109, 8.6821, 2),
-    ('Palmengarten', 'A large botanical garden with exotic plants, greenhouses, and themed landscapes.', 50.1233, 8.6507, 2),
-    ('Goethe House', 'The birthplace of the famous German writer Johann Wolfgang von Goethe.', 50.1106, 8.6825, 2),
-    ('Main Tower', 'A skyscraper offering panoramic views of Frankfurt from its observation deck.', 50.1106, 8.6754, 2),
-    ('Senckenberg Natural History Museum', 'One of the largest natural history museums in Germany, featuring dinosaur fossils and scientific exhibits.', 50.1175, 8.6527, 2);
+    ('Birmingham Museum & Art Gallery', 'A major museum known for its Pre-Raphaelite art collection and historical exhibits.', '09:00', '17:00', 52.4797, -1.9020, 1),
+    ('Bullring Shopping Centre', 'One of the largest shopping centers in the UK, famous for its modern architecture.', '10:00', '20:00', 52.4778, -1.8932, 1),
+    ('Cadbury World', 'A visitor attraction showcasing the history and production of Cadbury chocolates.', '10:00', '16:00', 52.4286, -1.9279, 1),
+    ('Birmingham Botanical Gardens', 'Beautiful Victorian gardens featuring glasshouses and rare plant species.', '10:00', '18:00', 52.4711, -1.9367, 1),
+    ('Library of Birmingham', 'A modern library with a unique architectural design and extensive book collections.', '08:00', '20:00', 52.4798, -1.9049, 1),
+    ('Thinktank, Birmingham Science Museum', 'A science museum with interactive exhibits and a planetarium.', '10:00', '17:00', 52.4820, -1.8864, 1),
+    ('Römerberg', 'The historic heart of Frankfurt, home to the Römer, the city hall since the 15th century.', '09:00', '18:00', 50.1109, 8.6821, 2),
+    ('Palmengarten', 'A large botanical garden with exotic plants, greenhouses, and themed landscapes.', '09:00', '18:00', 50.1233, 8.6507, 2),
+    ('Goethe House', 'The birthplace of the famous German writer Johann Wolfgang von Goethe.', '10:00', '18:00', 50.1106, 8.6825, 2),
+    ('Main Tower', 'A skyscraper offering panoramic views of Frankfurt from its observation deck.', '10:00', '21:00', 50.1106, 8.6754, 2),
+    ('Senckenberg Natural History Museum', 'One of the largest natural history museums in Germany, featuring dinosaur fossils and scientific exhibits.', '09:00', '17:00', 50.1175, 8.6527, 2),
+    ('Frankfurt Zoo', 'A well-known zoo with a wide variety of animals and conservation programs.', '09:00', '18:00', 50.1167, 8.7016, 2);
     
     INSERT INTO category (name) 
     VALUES 
@@ -251,7 +257,7 @@ function get_data_insertion_sql() {
     
     INSERT INTO place_category (placeID, categoryID) 
     VALUES 
-    (1, 1), (1, 2), (2, 3), (2, 8), (3, 3), (3, 8), (4, 9), (5, 4), (5, 3), (6, 1), (6, 2), (7, 9), (7, 3), (8, 1), (8, 2), (9, 3), (9, 8), (10, 4), (10, 3);
+    (1, 1), (1, 2), (2, 3), (2, 8), (3, 3), (3, 8), (4, 9), (5, 4), (5, 3), (6, 1), (6, 2), (7, 9), (7, 3), (8, 1), (8, 2), (9, 3), (9, 8), (10, 4), (10, 3), (11, 1), (11, 2), (12, 9), (12, 3);
     ";
 }
 ?>

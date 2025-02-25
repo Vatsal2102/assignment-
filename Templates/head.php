@@ -9,4 +9,5 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="http://localhost/Twin-cities-web-app/Main/styles.css">
     <!-- <link rel="stylesheet" href="http://localhost/Twin-cities-web-app/Main/darkmode.css"> -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=<?php echo GOOGLE_API_KEY; ?>&callback=initializeMaps" async defer></script>
 </head>

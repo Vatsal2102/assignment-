@@ -44,7 +44,6 @@ include_once('C:\laragon\www\Twin-cities-web-app\Templates\nav.php');
 
 // Function to display map
 function displayMap($city) {
-
     $mapData = [
         'name' => $city['name'],
         'lat' => $city['latitude'],
@@ -70,3 +69,10 @@ displayWeather($weatherDataCity2['current']);
 include_once('C:\laragon\www\Twin-cities-web-app\Templates\footer.php');
 
 ?>
+<script>
+    // Function to initialize all maps
+    function initializeMaps() {
+        initMap<?php echo $city1['name']; ?>();
+        initMap<?php echo $city2['name']; ?>();
+    }
+</script>

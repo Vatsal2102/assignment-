@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>City Maps</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+      #maps-container {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+      }
+      .map-container {
+        width: 48%;
+        height: 500px;
+        margin-bottom: 20px;
+      }
+      @media (max-width: 768px) {
+        .map-container {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h2>City Maps</h2>
+    <p>Hover over markers to see descriptions. Click for more details.</p>
+
+    <div id="maps-container">
+      <div id="map1" class="map-container"></div>
+      <div id="map2" class="map-container"></div>
+    </div>
+
+    <script>
+      // Initialize maps for Birmingham and Frankfurt
+      var map1 = L.map("map1").setView([52.4862, -1.8904], 12);
+      var map2 = L.map("map2").setView([50.1109, 8.6821], 12);
+
+      // Load OpenStreetMap tiles
+      function loadMapTiles(map) {
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          attribution: "© OpenStreetMap contributors",
+        }).addTo(map);
+      }
+
+      loadMapTiles(map1);
+      loadMapTiles(map2);
+
+      // Fetch places from PHP API
+      fetch("get_places.php")
+        .then((response) => response.json())
+        .then((data) => {
+          let cities = {};
+
+          // Group places by city
+          data.forEach((place) => {
+            if (!cities[place.city_name]) {
+              cities[place.city_name] = [];
+            }
+            cities[place.city_name].push(place);
+          });
+
+          // Add markers for Birmingham (Map 1)
+          if (cities["Birmingham"]) {
+            cities["Birmingham"].forEach((place) => {
+              let marker = L.marker([place.latitude, place.longitude]).addTo(
+                map1
+              );
+              marker.bindPopup(`<b>${place.name}</b><br>${place.description}<br>
+                        <a href="place_details.php?place=${encodeURIComponent(
+                          place.name
+                        )}" target="_blank">More Info</a>`);
+            });
+          }
+
+          // Add markers for Frankfurt (Map 2)
+          if (cities["Frankfurt"]) {
+            cities["Frankfurt"].forEach((place) => {
+              let marker = L.marker([place.latitude, place.longitude]).addTo(
+                map2
+              );
+              marker.bindPopup(`<b>${place.name}</b><br>${place.description}<br>
+                        <a href="place_details.php?place=${encodeURIComponent(
+                          place.name
+                        )}" target="_blank">More Info</a>`);
+            });
+          }
+        })
+        .catch((error) => console.error("Error fetching places:", error));
+    </script>
+  </body>
+</html>

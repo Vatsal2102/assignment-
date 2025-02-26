@@ -26,7 +26,7 @@ define('CITY1', [
         ['name' => 'Birmingham Museum and Art Gallery', 'lat' => 52.4796, 'lng' => -1.9036, 'icon' => './Images/museum.png', 'open' => '09:00', 'close' => '17:00'],
         ['name' => 'Bullring Shopping Centre', 'lat' => 52.4775, 'lng' => -1.8944, 'icon' => './Images/shopping.png', 'open' => '10:00', 'close' => '20:00'],
         ['name' => 'Cadbury World', 'lat' => 52.4308, 'lng' => -1.9323, 'icon' => './Images/park.png', 'open' => '10:00', 'close' => '16:00'],
-        ['name' => 'Birmingham Botanical Gardens', 'lat' => 52.4557, 'lng' => -1.9149, 'icon' => './Images/shopping.png', 'open' => '10:00', 'close' => '17:00'],
+        ['name' => 'Birmingham Botanical Gardens', 'lat' => 52.4557, 'lng' => -1.9149, 'icon' => './Images/garden.png', 'open' => '10:00', 'close' => '17:00'],
         ['name' => 'Library of Birmingham', 'lat' => 52.4814, 'lng' => -1.9033, 'icon' => './Images/library.png', 'open' => '09:00', 'close' => '20:00'],
         ['name' => 'Thinktank, Birmingham Science Museum', 'lat' => 52.4773, 'lng' => -1.9097, 'icon' => './Images/museum.png', 'open' => '10:00', 'close' => '17:00']
     ])

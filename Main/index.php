@@ -57,18 +57,13 @@ function displayMap($city) {
 displayMap($city1);
 displayMap($city2);
 
-// Function to display weather
-function displayWeather($formattedWeather) {
-    include('C:\laragon\www\Twin-cities-web-app\Templates\weatherwidget.php');
-}
-
-// Display weather for both cities
-displayWeather($weatherDataCity1['current']);
-displayWeather($weatherDataCity2['current']);
+// Display combined weather widget
+include('C:\laragon\www\Twin-cities-web-app\Templates\weatherwidget.php');
 
 include_once('C:\laragon\www\Twin-cities-web-app\Templates\footer.php');
 
 ?>
+
 <script>
     // Function to initialize all maps
     function initializeMaps() {

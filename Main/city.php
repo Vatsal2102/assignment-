@@ -1,11 +1,57 @@
 <?php
 
+/**
+ * City Comparison and Information Rendering Script
+ *
+ * This script handles the dynamic rendering of a twin cities comparison page,
+ * performing several critical functions:
+ * - Validates and processes city parameter from URL
+ * - Retrieves city-specific configuration data
+ * - Fetches and formats current and forecast weather data
+ * - Generates interactive map with city markers
+ * - Renders weather widget and page templates
+ *
+ * The script supports a predefined set of twin cities, swapping their order
+ * based on the selected city parameter to maintain consistent comparative display.
+ *
+ * @file city.php
+ * @package TwinCitiesWebApp
+ * @subpackage CityComparison
+ *
+ * @namespace dsa_twin_cities
+ *
+ * @uses config.php For city configuration constants
+ * @uses weather.php For weather data retrieval and formatting
+ * @uses head.php Renders page head section
+ * @uses nav.php Renders navigation
+ * @uses displaymap.php Generates interactive city map
+ * @uses weatherwidget.php Displays combined weather information
+ * @uses footer.php Renders page footer
+ *
+ * @method getFormattedWeatherData() Retrieves and formats weather data for a city
+ * @method displayMap() Renders interactive map for a given city
+ *
+ * @param string $_GET['city'] URL parameter specifying the primary city
+ *
+ * @return void Renders the complete twin cities comparison page
+ *
+ * @throws HeaderException If invalid city is provided (redirects to 404.php)
+ *
+ * @version 1.0.0
+ * @author: 
+ *
+ * @see config.php
+ * @see weather.php
+ */
+
 namespace dsa_twin_cities;
 
 include_once('C:\laragon\www\Twin-cities-web-app\config.php');
 include_once('C:\laragon\www\Twin-cities-web-app\Main\weather.php');
 
-// Check if city is provided in the URL and that it is one of the ones we are using
+// Validate and sanitize city parameter
+// Ensure only predefined cities are allowed
+// Redirect to 404 if city is invalid
 if (isset($_GET['city'])) {
     $cityName = $_GET['city'];
 

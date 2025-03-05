@@ -2,7 +2,28 @@
 
 ## Overview
 
-This documentation covers the Twin Cities web application, a PHP-based website and app, that showcases paired cities (Birmingham, UK and Frankfurt, Germany) with interactive maps, weather data, and points of interest. The application uses the Google Maps API for location visualization and OpenWeather API for weather information.
+This documentation covers the Twin Cities web application, a PHP-based website and app, that showcases paired cities (Birmingham, UK and Frankfurt, Germany) with interactive maps, weather data, and points of interest.
+
+### Documentation Generation
+
+**Important Note:** The project includes comprehensive PHPDoc comments throughout the codebase. I have generated detailed API documentation using PHPDoc. To access the full generated documentation:
+
+1. Navigate to the `docs` folder in the project root
+2. Open `index.html` in your web browser
+
+The generated documentation provides an in-depth look at:
+- Class structures
+- Method signatures
+- Parameter descriptions
+- Return type information
+- Code dependencies
+- Inline code documentation
+
+This generated documentation complements this README by offering a more technical, code-level view of the application's architecture and functionality.
+
+### Application Overview
+
+The application uses the Google Maps API for location visualization and OpenWeather API for weather information.
 
 ## File Structure
 
@@ -157,13 +178,82 @@ Creates a visual weather display component for the two cities:
   - Changes from side-by-side to stacked layout on mobile
   - Adds appropriate borders between cities (right border on desktop, bottom border on mobile)
 
-### 7. Database Integration
+### 7. Database Integration (`database.php`)
 
 Several files interact with the MySQL database:
 
 - `getplaces.php`: Retrieves all places with coordinates and city names
 - `placesdetails.php`: Fetches detailed information about a specific place
 - `rss_feed.php`: Generates an RSS feed from database content
+
+### Database Management 
+
+The `database.php` script provides a comprehensive solution for initializing and populating the database for the Twin Cities web application. It handles database connection, creation, table setup, and initial data insertion.
+
+### Key Functions
+
+#### 1. Database Connection (`connect()`)
+- Establishes a connection to the MySQL server
+- Uses credentials from the `config.php` file
+- Implements error handling for connection failures
+
+#### 2. Database Creation (`create_database()`)
+- Creates the database if it doesn't already exist
+- Selects the newly created database for further operations
+- Provides error handling and confirmation messages
+
+#### 3. Table Creation (`create_tables()`)
+- Dynamically creates all necessary tables using `get_table_creation_sql()`
+- Tables include:
+  - `country`: Stores country information
+  - `city`: Stores city details
+  - `news`: Stores news articles related to cities
+  - `photo`: Stores image metadata
+  - `news_photo`: Manages many-to-many relationship between news and photos
+  - `user`: Stores user information
+  - `comment`: Stores user comments
+  - `place`: Stores points of interest
+  - `category`: Stores place categories
+  - `place_category`: Manages many-to-many relationship between places and categories
+
+#### 4. Data Insertion (`insert_data()`)
+- Populates the created tables with initial data
+- Inserts data for:
+  - Countries (United Kingdom and Germany)
+  - Cities (Birmingham and Frankfurt)
+  - News articles for both cities
+  - Photos associated with news
+  - Places of interest
+  - Categories for places
+
+### Database Schema Highlights
+
+- Uses foreign key constraints to maintain data integrity
+- Supports complex relationships between entities
+- Includes geospatial data (latitude, longitude)
+- Stores rich metadata about cities, places, and news
+
+### Error Handling
+
+- Comprehensive try-catch blocks
+- Detailed error messages for connection, database, and table operations
+- Consumes and frees result sets from multi-query operations
+
+### Usage
+
+To initialize the database, simply include and run the `database.php` script. It will:
+1. Connect to the MySQL server
+2. Create the database
+3. Create all necessary tables
+4. Insert initial data
+
+### Customization
+
+The `get_table_creation_sql()` and `get_data_insertion_sql()` functions can be easily modified to:
+- Add new tables
+- Change table structures
+- Modify initial data
+- Add more complex relationships
 
 ### 8. Error Handling
 
@@ -188,7 +278,7 @@ The application integrates with:
 
 1. **Google Maps API**: For displaying interactive maps with custom markers
 2. **OpenWeather API**: For current and forecast weather data
-3. **Flickr API**: We defined API key which we intend to use in the future
+3. **Flickr API**: I defined API key which I intend to use in the future
 
 ## Templates and Design
 
@@ -202,8 +292,8 @@ The application uses:
 ## Additional Features
 
 1. **RSS Feed**: Provides city and place information in RSS format
-2. **Dark Mode**: We have implemented the code which we plan to use in the future
-3. **Documentation**: We intend this to be a dedicated page explaining the application
+2. **Dark Mode**: I have implemented the code which I plan to use in the future
+3. **Documentation**: I intend this to be a dedicated page explaining the application
 4. **Error Pages**: Custom 404 page for better user experience
 
 ## Database Schema

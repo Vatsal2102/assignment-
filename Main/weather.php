@@ -1,10 +1,41 @@
 <?php
 
+/**
+ * Processes and formats weather data for current conditions and forecast.
+ *
+ * This script provides two primary functions:
+ * 1. formatCurrentWeather(): Transforms raw current weather data into a structured format
+ * 2. formatForecastWeather(): Processes forecast data, limiting entries to prevent data overload
+ *
+ * Key transformations include:
+ * - Temperature conversion from Kelvin to Celsius
+ * - Extracting relevant weather attributes
+ * - Limiting forecast entries
+ *
+ * @file weather.php
+ * @package WeatherAPI
+ * @subpackage WeatherProcessing
+ *
+ * @uses OpenWeatherMap External weather data API
+ *
+ * @return array Formatted weather data for current conditions and forecast
+ *
+ * @throws DataProcessingException If weather data cannot be processed
+ *
+ * @version 1.0.0
+ */
+
+// Weather utility functions for fetching and processing weather data from OpenWeatherMap API
 namespace dsa_twin_cities;
 
 include_once('C:\laragon\www\Twin-cities-web-app\config.php');
 
-// Function to fetch current weather data using OpenWeatherAPI
+/**
+ * Fetches current weather data for a given city using OpenWeatherMap API
+ * 
+ * @param string $city City name to retrieve weather for
+ * @return array|null Parsed JSON weather data or null if request fails
+ */
 function getCurrentWeather($city)
 {
     $apiKey = OPENWEATHER_API_KEY;
@@ -16,7 +47,12 @@ function getCurrentWeather($city)
     return json_decode($response, true);
 }
 
-// Function to fetch forecast weather data using OpenWeatherAPI
+/**
+ * Retrieves weather forecast data for a given city using OpenWeatherMap API
+ * 
+ * @param string $city City name to retrieve forecast for
+ * @return array|null Parsed JSON forecast data or null if request fails
+ */
 function getForecastWeather($city)
 {
     $apiKey = OPENWEATHER_API_KEY;
@@ -28,7 +64,8 @@ function getForecastWeather($city)
     return json_decode($response, true);
 }
 
-// Function to format the current weather data
+// Convert timestamps to correct timezone
+// Perform temperature conversion from Kelvin to Celsius
 function formatCurrentWeather($currentWeatherData)
 {
     if (!$currentWeatherData) {
@@ -58,7 +95,8 @@ function formatCurrentWeather($currentWeatherData)
     ];
 }
 
-// Function to format the forecast weather data
+// Limit forecast to 20 entries to prevent overwhelming data
+// Convert temperatures and format forecast data
 function formatForecastWeather($forecastWeatherData)
 {
     if (!$forecastWeatherData) {

@@ -1,4 +1,48 @@
 <?php
+
+/**
+ * Database Initialization and Setup Script
+ *
+ * This script handles the complete database setup process for the Twin Cities Web Application,
+ * performing the following critical functions:
+ * - Establishing a connection to the MySQL server
+ * - Creating the database if it doesn't exist
+ * - Creating all necessary tables with appropriate schema
+ * - Populating tables with initial data
+ *
+ * Key features:
+ * - Uses configuration constants from config.php
+ * - Implements robust error handling
+ * - Supports multiple table and data insertion via multi_query
+ * - Handles database and table creation with IF NOT EXISTS clauses
+ *
+ * @file database.php
+ * @package TwinCitiesWebApp
+ * @subpackage DatabaseManagement
+ *
+ * @namespace dsa_twin_cities
+ *
+ * @uses config.php For database connection parameters
+ *
+ * @method connect() Establishes MySQL database connection
+ * @method create_database() Creates database if not exists
+ * @method create_tables() Generates database tables
+ * @method insert_data() Populates tables with initial data
+ * @method get_table_creation_sql() Returns SQL for table creation
+ * @method get_data_insertion_sql() Returns SQL for data insertion
+ *
+ * @return void Outputs status messages for database setup steps
+ *
+ * @throws DatabaseConnectionException If database connection fails
+ * @throws DatabaseCreationException If database or table creation fails
+ * @throws DataInsertionException If data insertion fails
+ *
+ * @version 1.0.0
+ * @author:
+ *
+ * @see config.php
+ */
+
 namespace dsa_twin_cities;
 include_once('C:\laragon\www\Twin-cities-web-app\config.php');
 

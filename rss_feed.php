@@ -1,4 +1,7 @@
 <?php
+
+// Generate RSS feed for cities, places, and news items
+// Combines data from multiple database tables
 namespace dsa_twin_cities;
 
 include_once('C:\laragon\www\Twin-cities-web-app\config.php');
@@ -10,7 +13,8 @@ if ($mysqli->connect_error) {
     die("Connection failed: " . $mysqli->connect_error);
 }
 
-// Query to get city and place data
+// Complex JOIN query to aggregate city, place, and news information
+// Ensures comprehensive content for RSS feed
 $query = "
     SELECT city.name AS city_name, city.description AS city_description, city.history AS city_history, 
            place.name AS place_name, place.description AS place_description, 
@@ -27,7 +31,9 @@ if (!$result) {
     die("Query failed: " . $mysqli->error);
 }
 
-// Generate RSS feed
+// Set proper XML and RSS headers
+// Sanitize and encode data for XML compatibility
+// Generate RSS feed items dynamically from database results
 header("Content-Type: application/rss+xml; charset=UTF-8");
 
 echo "<?xml version='1.0' encoding='UTF-8' ?>";

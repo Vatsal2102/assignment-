@@ -1,17 +1,44 @@
 <?php
-// Get weather conditions for styling
+/**
+ * Weather Widget Script for Twin Cities Web Application
+ *
+ * This script generates a responsive weather widget for two cities, 
+ * dynamically styling the display based on current weather conditions 
+ * and time of day.
+ *
+ * @package TwinCitiesWeather
+ * @subpackage WeatherWidget
+ * @author: 
+ * @version 1.0.0
+ */
+
+/**
+ * Determines the appropriate weather condition based on the current weather data
+ *
+ * This function analyzes the weather data to return a standardized 
+ * weather condition string used for styling and icon selection. It considers:
+ * - Main weather type (clear, clouds, rain, etc.)
+ * - Time of day (day or night for clear conditions)
+ *
+ * @param array $formattedWeather Associative array containing current weather information
+ * @return string Standardized weather condition (clear-day, clear-night, clouds, rain, snow)
+ */
 function getWeatherCondition($formattedWeather) {
-    $weatherCondition = 'clear-day'; // Default value
+    // Default to clear day if no weather data is provided
+    $weatherCondition = 'clear-day';
+
+    // Check if weather main type is available
     if (isset($formattedWeather['weather_main'])) {
         $weatherMain = strtolower($formattedWeather['weather_main']);
 
-        // Set weather condition based on main weather and time of day
+        // Determine weather condition based on main weather type
         if ($weatherMain == 'clear') {
             // Check if it's day or night based on current time vs sunrise/sunset
             $currentTime = strtotime($formattedWeather['date']);
             $sunriseTime = strtotime($formattedWeather['sunrise']);
             $sunsetTime = isset($formattedWeather['sunset']) ? strtotime($formattedWeather['sunset']) : null;
 
+            // Set condition based on time relative to sunrise and sunset
             if ($currentTime < $sunriseTime || ($sunsetTime !== null && $currentTime > $sunsetTime)) {
                 $weatherCondition = 'clear-night';
             } else {
@@ -28,41 +55,77 @@ function getWeatherCondition($formattedWeather) {
     return $weatherCondition;
 }
 
-// Get weather conditions for both cities
+// Retrieve and process weather conditions for both cities
+/**
+ * Determine weather display parameters for each city
+ * 
+ * This section prepares weather-related display attributes for 
+ * each city, including weather condition, time of day, and 
+ * additional weather details.
+ */
+// Weather condition for first city
 $weatherCondition1 = getWeatherCondition($weatherDataCity1['current']);
+
+// Weather condition for second city
 $weatherCondition2 = getWeatherCondition($weatherDataCity2['current']);
 
-// Check if it's day or night for each city
+/**
+ * Determine daytime status for each city
+ * 
+ * Calculates whether it's currently daytime or nighttime based 
+ * on current time, sunrise, and sunset times.
+ */
+// Daytime calculation for first city
 $currentTime1 = strtotime($weatherDataCity1['current']['date']);
 $sunriseTime1 = strtotime($weatherDataCity1['current']['sunrise']);
 $sunsetTime1 = isset($weatherDataCity1['current']['sunset']) ? strtotime($weatherDataCity1['current']['sunset']) : null;
 $isDaytime1 = ($currentTime1 >= $sunriseTime1 && ($sunsetTime1 === null || $currentTime1 <= $sunsetTime1));
 
+// Daytime calculation for second city
 $currentTime2 = strtotime($weatherDataCity2['current']['date']);
 $sunriseTime2 = strtotime($weatherDataCity2['current']['sunrise']);
 $sunsetTime2 = isset($weatherDataCity2['current']['sunset']) ? strtotime($weatherDataCity2['current']['sunset']) : null;
 $isDaytime2 = ($currentTime2 >= $sunriseTime2 && ($sunsetTime2 === null || $currentTime2 <= $sunsetTime2));
 
-// Get precipitation chance (default to 0 if not available)
+/**
+ * Prepare precipitation data with fallback to 0 if not available
+ * 
+ * Ensures a default value of 0 is used if precipitation data 
+ * is missing from the weather information.
+ */
 $precipitation1 = isset($weatherDataCity1['current']['precipitation']) ? $weatherDataCity1['current']['precipitation'] : '0';
 $precipitation2 = isset($weatherDataCity2['current']['precipitation']) ? $weatherDataCity2['current']['precipitation'] : '0';
 
-// Get weather descriptions and main weather types
+/**
+ * Format weather descriptions with proper capitalization
+ * 
+ * Ensures the first letter of the weather description is capitalized 
+ * for consistent display.
+ */
 $weatherDesc1 = ucfirst($weatherDataCity1['current']['description']);
 $weatherDesc2 = ucfirst($weatherDataCity2['current']['description']);
 ?>
 
+<!-- 
+Weather Widget HTML Template 
+
+This template creates a responsive, dynamically styled weather 
+widget for two cities, with detailed weather information and 
+weather-condition-based visual styling.
+-->
 <div class="combined-weather-container">
     <div class="row">
-        <!-- First City -->
+        <!-- First City Weather Column -->
         <div class="col-md-6 city-column" data-weather="<?php echo $weatherCondition1; ?>" data-time="<?php echo $isDaytime1 ? 'day' : 'night'; ?>">
             <div class="weather-bg-overlay"></div>
             <div class="city-content">
+                <!-- City Header with Name and Current Time -->
                 <div class="city-header">
                     <h1 class="city-name"><?php echo $weatherDataCity1['current']['name']; ?></h1>
                     <div class="current-time"><?php echo date('H:i', strtotime($weatherDataCity1['current']['date'])); ?></div>
                 </div>
 
+                <!-- Main Weather Information -->
                 <div class="weather-main-info">
                     <div class="temperature">
                         <span class="temp-value"><?php echo round($weatherDataCity1['current']['temp']); ?></span>
@@ -71,8 +134,10 @@ $weatherDesc2 = ucfirst($weatherDataCity2['current']['description']);
                     <div class="feels-like">Feels Like <?php echo round($weatherDataCity1['current']['feels_like']); ?>°</div>
                 </div>
 
+                <!-- Weather Description -->
                 <div class="weather-description"><?php echo $weatherDesc1; ?></div>
 
+                <!-- Detailed Weather Information -->
                 <div class="weather-details">
                     <div class="detail-item">
                         <span class="detail-label">Precip:</span>
@@ -94,15 +159,17 @@ $weatherDesc2 = ucfirst($weatherDataCity2['current']['description']);
             </div>
         </div>
 
-        <!-- Second City -->
+        <!-- Second City Weather Column -->
         <div class="col-md-6 city-column" data-weather="<?php echo $weatherCondition2; ?>" data-time="<?php echo $isDaytime2 ? 'day' : 'night'; ?>">
             <div class="weather-bg-overlay"></div>
             <div class="city-content">
+                <!-- City Header with Name and Current Time -->
                 <div class="city-header">
                     <h1 class="city-name"><?php echo $weatherDataCity2['current']['name']; ?></h1>
                     <div class="current-time"><?php echo date('H:i', strtotime($weatherDataCity2['current']['date'])); ?></div>
                 </div>
 
+                <!-- Main Weather Information -->
                 <div class="weather-main-info">
                     <div class="temperature">
                         <span class="temp-value"><?php echo round($weatherDataCity2['current']['temp']); ?></span>
@@ -111,8 +178,10 @@ $weatherDesc2 = ucfirst($weatherDataCity2['current']['description']);
                     <div class="feels-like">Feels Like <?php echo round($weatherDataCity2['current']['feels_like']); ?>°</div>
                 </div>
 
+                <!-- Weather Description -->
                 <div class="weather-description"><?php echo $weatherDesc2; ?></div>
 
+                <!-- Detailed Weather Information -->
                 <div class="weather-details">
                     <div class="detail-item">
                         <span class="detail-label">Precip:</span>
@@ -135,6 +204,13 @@ $weatherDesc2 = ucfirst($weatherDataCity2['current']['description']);
         </div>
     </div>
 </div>
+
+<!-- 
+CSS Styling for Weather Widget 
+
+Provides responsive and dynamic styling based on weather conditions 
+and time of day, with mobile-friendly design and interactive elements.
+-->
 
 <style>
 /* Main container for the combined weather widget */
